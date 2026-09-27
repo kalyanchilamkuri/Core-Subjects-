@@ -1,0 +1,75 @@
+1. What is the difference between a process and a thread?
+Hmm... A process is like a big box containing everything it needs: memory, code, data, etc. A thread is like a smaller path inside that box, which executes instructions.
+Process is an independent unit of execution. Has its own memory.
+Thread is a lightweight subpart of a process. It shares the memory with other threads of the same process.
+Example: Running Google Chrome = process
+Each tab or script running inside = thread
+
+
+✅ 2. Why are threads called lightweight processes?
+Let me think... Threads are called lightweight processes because:
+They don’t need separate memory space — they just use what the process already has.
+Creating and switching between threads is much faster and less resource-heavy than doing the same for full processes.
+So yeah, they're like “mini-processes” running under the same roof.
+
+
+✅ 3. What are the benefits of multithreading?
+Hmm, the main benefits are:
+Better CPU usage – Threads can run in parallel on multi-core CPUs.
+Responsiveness – UI won't freeze, because background tasks run on different threads.
+Faster execution – Tasks are split and handled independently.
+Memory efficiency – All threads share the same memory.
+Example: While typing in MS Word:
+One thread handles typing,
+Another checks spelling,
+Another auto-saves.
+
+
+✅ 4. What are user-level vs kernel-level threads?
+Yeah so…
+Feature	User-Level Thread (ULT)	Kernel-Level Thread (KLT)
+Managed by	User library	OS Kernel
+Speed	Fast to create/switch	Slower
+Kernel-aware?	No	Yes
+If 1 thread blocks?	All block	Only that one blocks
+Used when	Speed is priority	Need true parallelism
+
+
+
+✅ 5. Explain context switching between threads and processes.
+Ahh okay, so:
+Context switching means saving the current state (registers, memory info) and loading another’s.
+Between processes → heavier: OS switches full memory context, stack, etc.
+Between threads → lighter: Memory is shared, only thread-specific data (like program counter, stack) is switched.
+So basically, thread switching is faster and more efficient.
+
+
+✅ 6. What are the types of multithreading models?
+There are mainly 3 models:
+Many-to-One – Many user threads map to one kernel thread
+Simple, but not scalable (one blocks, all block)
+One-to-One – Each user thread maps to one kernel thread
+Parallelism possible, but costly for many threads
+Many-to-Many – Many user threads map to many kernel threads\
+Most flexible and scalable
+
+
+✅ 7. Can threads in the same process access each other’s data?
+Yes! That's actually one of the core features of threads.
+All threads of a process share memory, so they can access the same data structures.
+But... it can cause race conditions or bugs if not synchronized properly (like two threads writing at same time).
+
+
+✅ 8. What happens if one thread crashes?
+Hmm... if one thread crashes:
+It can affect the whole process, because all threads share the same memory space.
+For example, if one thread corrupts a shared variable or crashes the heap, all threads might go down.
+That’s why proper error handling and synchronization is super important.
+
+
+✅ 9. How is scheduling handled between multiple threads?
+Oh right! So the Operating System’s scheduler handles this — especially in the case of kernel-level threads.
+Each thread gets a time slice or priority.
+Threads can be preempted (paused and resumed later).
+In user-level threads, the thread library handles scheduling, not the OS.
+So depending on the type (user/kernel), either the thread library or the OS handles the scheduling.
